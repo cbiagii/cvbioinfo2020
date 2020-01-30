@@ -86,7 +86,19 @@ print(ht)
 ######################################################
 # Sort anno dataframe based on conditions and plot the 
 # heatmap with the grouped columns
-
+anno <- anno[order(anno$cond), , drop=F]
+tab_heatmap <- tab_heatmap[, rownames(anno)]
+ha1 = HeatmapAnnotation(df = anno, col = list(cond = c("untrt" = "black", "trt" = "green")))
+ht <- Heatmap(tab_heatmap, 
+              top_annotation = ha1, 
+              name = "zscore", column_title = "", width = 1, 
+              show_row_names = F, show_column_names = F,
+              cluster_rows = T, cluster_columns = F,
+              clustering_distance_columns = "pearson", clustering_method_columns = "ward.D2",
+              clustering_distance_rows = "pearson", clustering_method_rows = "ward.D2", 
+              show_column_dend = F, show_row_dend = T, 
+              row_names_gp = gpar(fontsize = 2))
+print(ht)
 ######################################################
 ######################################################
 ######################################################
